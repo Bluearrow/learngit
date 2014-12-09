@@ -1,0 +1,15 @@
+CPP = g++
+OFLAG = -o
+CFLAG = -c
+
+objects = FirstCommonNode.o ListHelper.o
+target = Test
+
+$(target): $(objects)
+	$(CPP) $(OFLAG) $(target) $(objects)
+FirstCommonNode.o: FirstCommonNode.cpp ListHelper.h
+	$(CPP) $(CFLAG) -g FirstCommonNode.cpp
+ListHelper.o: ListHelper.cpp
+	$(CPP) $(CFLAG) -g ListHelper.cpp
+clean:
+	rm $(objects) $(target)

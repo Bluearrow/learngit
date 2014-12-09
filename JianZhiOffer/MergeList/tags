@@ -1,0 +1,20 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+CFLAG	makefile	/^CFLAG = -c$/;"	m
+CPP	makefile	/^CPP = g++$/;"	m
+ConnectNode	ListHelper.cpp	/^void ConnectNode(ListNode* p1, ListNode* p2)$/;"	f
+CreateNode	ListHelper.cpp	/^ListNode CreateNode(int value)$/;"	f
+ListNode	ListHelper.h	/^struct ListNode$/;"	s
+MergerList	MergeList.cpp	/^ListNode* MergerList(ListNode* pHead1, ListNode* pHead2)$/;"	f
+OFLAG	makefile	/^OFLAG = -o$/;"	m
+PrintList	ListHelper.cpp	/^void PrintList(ListNode* pHead)$/;"	f
+main	MergeList.cpp	/^int main()$/;"	f
+main	main.cpp	/^int main()$/;"	f
+objects	makefile	/^objects = MergeList.o ListHelper.o$/;"	m
+pNext	ListHelper.h	/^    ListNode* pNext;$/;"	m	struct:ListNode
+target	makefile	/^target = MergerListTest$/;"	m
+value	ListHelper.h	/^    int value;$/;"	m	struct:ListNode

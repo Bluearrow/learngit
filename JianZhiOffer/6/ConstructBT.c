@@ -1,0 +1,128 @@
+/* ConstructBT.c
+ * Construct binary tree according to its 先序和中序遍历的结果
+ */
+#include <stdio.h>
+#include <stdlib.h>
+
+// Defintion of binary tree node.
+struct BTNode
+{
+    int value;
+    BTNode* pLeft;
+    BTNode* pRight;
+};
+
+BTNode* CreateBTNode(int a_value)
+{
+    BTNode* p = (BTNode*)malloc(sizeof(struct BTNode));
+    p->value = a_value;
+    p->pLeft = NULL;
+    p->pRight = NULL;
+    return p;
+}
+// Pre-order reverse.
+void PrintBT(BTNode* root)
+{
+    if(root == NULL)
+        return;
+    printf("%d ", root->value);
+    PrintBT(root->pLeft);
+    PrintBT(root->pRight);
+}
+
+void TestBT()
+{
+    BTNode* n1 = CreateBTNode(1);
+    BTNode* n2 = CreateBTNode(2);
+    BTNode* n3 = CreateBTNode(3);
+    n1->pLeft = n2;
+    n1->pRight = n3;
+    PrintBT(n1);
+}
+
+/* 
+ * 根据二叉树的先序和中序遍历序列找到根节点在中序序列中的位置。
+ * @param P: 先序遍历序列
+ * @param p_start: 二叉树在P中的起始位置
+ * @param p_end: 二叉树在P中的终止位置
+ * @param I: 中序遍历序列
+ * @param i_start: 二叉树在I中的起始位置
+ * @param i_end: 二叉树在I中的终止位置
+ */
+int FindRoot(int P[], int p_start, int p_end,
+        int I[], int i_start, int i_end)
+{
+    int key = P[p_start];
+    int i, root_indexer=-1;
+    for(i=i_start; i<=i_end; i++)
+    {
+        if(I[i] == key)
+        {
+            root_indexer = i;
+            break;
+        }
+    }
+    return root_indexer;
+}
+
+void TestFR()
+{
+    int A[] = {1,2,4,7,3,5,6,8};
+    int B[] = {4,7,2,1,5,3,8,6};
+    int result = FindRoot(A,0,7,B,0,7);
+    printf("%d\n", result);
+}
+
+/* 找出根节点在中序中的位置，将先序和中序序列各分成左右子树
+ * 的序列。递归这一过程直到叶子节点。
+ */
+BTNode* ConstructBT(int P[], int p_start, int p_end,
+        int I[], int i_start, int i_end)
+{
+    if(p_start <= p_end)
+    {
+        // 根据先序序列第一个元素构造根节点。
+        BTNode* root = CreateBTNode(P[p_start]);
+        // 找到根节点在中序序列中的位置，如果小于0，则输入序列不能构造出二叉树。
+        int root_indexer = FindRoot(P,p_start,p_end,I,i_start,i_end);
+        if(root_indexer < 0)
+            printf("Input is valid.\n");
+        //printf("%d\n",root_indexer);
+        // 计算左右子树的长度。
+        int l_length = root_indexer - i_start;
+        int r_length = i_end - root_indexer;
+
+        // 递归获取左右子树的根节点并连接到根节点。关键所在：整明白
+        // 左右子树在两个序类中的起始和终止位置。
+        root->pLeft = ConstructBT(P, p_start+1, p_start+l_length,
+            I, i_start, root_indexer-1);
+        root->pRight = ConstructBT(P, p_end - r_length +1, p_end,
+            I, root_indexer+1, i_end);
+ 
+       return root;
+    }
+    else
+        return NULL;
+}
+
+void TestCBT()
+{
+    int A[] = {1,2,4,7,3,5,6,8};
+    int B[] = {4,7,2,1,5,3,8,6};
+    int i;
+    printf("The given pre-order sequence is\n");
+    for(i=0;i<8;i++)
+        printf("%d ",A[i]);
+    printf("\n");
+    BTNode* p = ConstructBT(A,0,7,B,0,7);
+    printf("Pre-order sequence of the constructed binary tree is\n");
+    PrintBT(p);
+    printf("\n");
+}
+
+int main()
+{
+    //TestBT();
+    //TestFR();
+    TestCBT();
+}
